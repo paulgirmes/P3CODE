@@ -38,7 +38,12 @@ pygame.time.Clock().tick(30)
 
           fin de la boucle de jeu """
 
-gyver = cl.Character()
-print(gyver)
-print(gyver.sprite_location)
+
+maze=cl.Maze("niveau1.json")
+print(maze.load_level())
+gyver = cl.Character(maze.sprites)
+""" print(gyver)
+print(gyver.location)
+print(len(gyver.sprites))
+print(gyver.sprites) """
 
