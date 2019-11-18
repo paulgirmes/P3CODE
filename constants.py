@@ -1,11 +1,4 @@
-
-"""contient les adresses des images, 
-pour une modification plus facile, le titre de la fenêtre, 
-son icône, le nombre de sprites sur une largeur, 
-la taille des sprites, et donc la taille de la fenêtre 
-(multiplie les deux dernières constantes)."""
-
-
+"""some constants for an easier modification"""
 
 def sprite_dim():
     return 40
@@ -29,6 +22,10 @@ def img(img):
         "ether": "ether.png"
         }
     return switcher.get (img)
+
+def icon():
+    icon="MacGyver.png"
+    return icon
 
 
 
