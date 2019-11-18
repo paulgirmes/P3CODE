@@ -6,20 +6,30 @@ la taille des sprites, et donc la taille de la fenêtre
 (multiplie les deux dernières constantes)."""
 
 
-def maze_dim():
-    return 15
+
 def sprite_dim():
-    return 50
+    return 40
+
 def items_to_collect():
-    needle = "filenameNeedle"
-    plastic_tube = "filenameTube"
-    ether = "filenameEther"
-    item_list = [needle, plastic_tube, ether]
+    item_list = ["needle", "plastic_tube", "ether"]
     return item_list
-def cote_fenetre():
-    return 500
-def image_icone():
-    return "dk_bas.png"
-def titre_fenetre():
-    return "dk_bas.png"
+
+def window_size():
+    return 600
+
+def img(img):
+    switcher={
+        "wall": "wall4040.png",
+        "macgyver": "MacGyver.png",
+        "guard": "Gardien.png",
+        "": "floortile4040.png",
+        "entry": "floortile4040.png",
+        "needle": "aiguille.png",
+        "plastic_tube": "tube_plastique.png",
+        "ether": "ether.png"
+        }
+    return switcher.get (img)
+
+
+
 
