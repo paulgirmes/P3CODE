@@ -10,7 +10,7 @@ class Maze:
     def __init__(self, level_file):
         self.level=level_file
         self.sprites=[]
-        #self.side_sprites_number=15#sqrt(int(len(self.sprites)))
+    #self.side_sprites_number=15#sqrt(int(len(self.sprites)))
     
     def load_level(self):
         #level import from JSON file
@@ -31,10 +31,10 @@ class Maze:
             random_index=random.randint(0, len(empty_sprites_index)-1)
             self.sprites[empty_sprites_index[random_index]]=n
             empty_sprites_index.pop(random_index)
-          
-    def display_maze(self, character_pos_sprite):
-        
-        game_window = pygame.display.set_mode((ct.window_size(), ct.window_size()))
+
+      
+    def display_maze(self, character_pos_sprite, items_carried): 
+        game_window = pygame.display.set_mode((ct.window_size()-20, ct.window_size()))
         hero=pygame.image.load(ct.img("macgyver")).convert_alpha()
         #sprites img loading /postioning(from sprites number root and a sprite dim) + blit 
         i=0
@@ -46,6 +46,8 @@ class Maze:
             i += 1  
         #hero postion update
         game_window.blit(hero, ((character_pos_sprite%self.side_sprites_number()*ct.sprite_dim()), (character_pos_sprite//self.side_sprites_number()*ct.sprite_dim())))
+        font = pygame.freetype.SysFont("courrier", 15, 1)
+        font.render_to(game_window, (125, 602), "Items collected: "+str(items_carried), (255, 255, 255))
         pygame.display.flip()
     
     def side_sprites_number(self):

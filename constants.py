@@ -8,7 +8,7 @@ def items_to_collect():
     return item_list
 
 def window_size():
-    return 600
+    return 620
 
 def img(img):
     switcher={
