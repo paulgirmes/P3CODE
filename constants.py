@@ -1,33 +1,30 @@
 """some constants for an easier modification"""
 
 
-def sprite_dim():
-    return 40
+SPRITE_DIM = 40
 
+ITEMS_TO_COLLECT = ["needle", "plastic_tube", "ether"]
 
-def items_to_collect():
-    item_list = ["needle", "plastic_tube", "ether"]
-    return item_list
+WINDOW_WIDTH = 620
 
+WINDOW_HEIGHT = 645
 
-def window_size():
-    return 620
+IMG = {
+    "wall": "images/wall4040.png",
+    "macgyver": "images/MacGyver.png",
+    "guard": "images/Gardien.png",
+    "": "images/floortile4040.png",
+    "entry": "images/floortile4040.png",
+    "needle": "images/aiguille.png",
+    "plastic_tube": "images/tube_plastique.png",
+    "ether": "images/ether.png",
+    "seringe": "images/seringe.png",
+}
 
+ICON = "images/MacGyver.png"
 
-def img(img):
-    switcher = {
-        "wall": "images/wall4040.png",
-        "macgyver": "images/MacGyver.png",
-        "guard": "images/Gardien.png",
-        "": "images/floortile4040.png",
-        "entry": "images/floortile4040.png",
-        "needle": "images/aiguille.png",
-        "plastic_tube": "images/tube_plastique.png",
-        "ether": "images/ether.png",
-    }
-    return switcher.get(img)
-
-
-def icon():
-    icon = "images/MacGyver.png"
-    return icon
+SOUNDS = {
+    "win": "sounds/0812.ogg",
+    "loose": "sounds/round_end.wav",
+    "begin": "sounds/MacGyver.ogg",
+}

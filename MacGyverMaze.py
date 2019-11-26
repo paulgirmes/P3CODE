@@ -15,7 +15,7 @@ import pygame.freetype
 pygame.init()
 # loop speed limitation
 pygame.time.Clock().tick(30)
-icon = pygame.image.load(ct.icon())
+icon = pygame.image.load(ct.ICON)
 pygame.display.set_icon(icon)
 
 
@@ -36,7 +36,7 @@ def main():
     f = 1
     while f:
         pygame.time.Clock().tick(30)
-        main_window = pygame.display.set_mode((ct.window_size() - 20, ct.window_size()))
+        main_window = pygame.display.set_mode((ct.WINDOW_WIDTH - 20, ct.WINDOW_HEIGHT))
         font = pygame.freetype.SysFont("Comic Sans MS", 40, 0)
         main_window.fill((0, 0, 0))
         font.render_to(main_window, (80, 270), "PRESS SPACE TO PLAY", (255, 255, 255))
@@ -60,7 +60,7 @@ def play(level):
     maze.load_level()
     gyver = cl.Character(maze.sprites)
     maze.display_maze(gyver.location, gyver.item_carried)
-    son = pygame.mixer.Sound("sounds/MacGyver.ogg")
+    son = pygame.mixer.Sound(ct.SOUNDS["begin"])
     i = 1
     son.play()
     son.fadeout(10000)
@@ -74,23 +74,23 @@ def play(level):
                 # key detection via real values (locals doesn't seems to be taken into account in dict)
                 switcher = {273: "up", 274: "down", 276: "left", 275: "right"}
                 type = switcher.get(event.key)
-                # If value not within switcher dont use property
+                # If value not within switcher dont use method
                 if type != None:
                     gyver.move(switcher.get(event.key))
                     # update of colected items +sprite + update of the carried-items
-                    for item in ct.items_to_collect():
+                    for item in ct.ITEMS_TO_COLLECT:
                         if item == maze.sprites[gyver.location]:
                             gyver.item_carried.append(maze.sprites[gyver.location])
                             maze.sprites[gyver.location] = ""
                     maze.display_maze(gyver.location, gyver.item_carried)
         # test of winning/loosing conditions
         if (gyver.location == maze.sprites.index("guard")) and (
-            len(gyver.item_carried) == len(ct.items_to_collect())
+            len(gyver.item_carried) == len(ct.ITEMS_TO_COLLECT)
         ):
             son.stop()
-            win = pygame.mixer.Sound("sounds/0812.ogg")
+            win = pygame.mixer.Sound(ct.SOUNDS["win"])
             win.play()
-            main_window = pygame.display.set_mode((ct.window_size(), ct.window_size()))
+            main_window = pygame.display.set_mode((ct.WINDOW_WIDTH, ct.WINDOW_HEIGHT))
             font = pygame.freetype.SysFont("Comic Sans MS", 40, 0)
             main_window.fill((0, 0, 0))
             font.render_to(main_window, (205, 270), "YOU WIN", (255, 255, 255))
@@ -99,13 +99,13 @@ def play(level):
             win.stop()
             i = 0
         elif (gyver.location == maze.sprites.index("guard")) and (
-            len(gyver.item_carried) != len(ct.items_to_collect())
+            len(gyver.item_carried) != len(ct.ITEMS_TO_COLLECT)
         ):
             son.stop()
             pygame.mixer.music.set_volume(0.1)
-            pygame.mixer.music.load("sounds/round_end.wav")
+            pygame.mixer.music.load(ct.SOUNDS["loose"])
             pygame.mixer.music.play()
-            main_window = pygame.display.set_mode((ct.window_size(), ct.window_size()))
+            main_window = pygame.display.set_mode((ct.WINDOW_WIDTH, ct.WINDOW_HEIGHT))
             font = pygame.freetype.SysFont("Comic Sans MS", 40, 0)
             main_window.fill((0, 0, 0))
             font.render_to(main_window, (180, 270), "GAME OVER", (255, 255, 255))

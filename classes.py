@@ -24,7 +24,7 @@ class Maze:
     def load_level(self):
         """load self.level keys 'sprites' in self.sprites[]
             detects 'free sprites' indexes
-            randomly replaces 'free srites' of self.sprites with an item of ct.items_to_collect() 
+            randomly replaces 'free srites' of self.sprites with an item of ct.ITEMS_TO_COLLECT 
         """
         # level import from JSON file
         with open(self.level) as f:
@@ -39,7 +39,7 @@ class Maze:
                 empty_sprites_index.append(index_sprites)
             index_sprites += 1
         # pseudo random insertion of items in free sprites lefts
-        items_to_collect = ct.items_to_collect()
+        items_to_collect = ct.ITEMS_TO_COLLECT
         for n in items_to_collect:
             random_index = random.randint(0, len(empty_sprites_index) - 1)
             self.sprites[empty_sprites_index[random_index]] = n
@@ -52,19 +52,19 @@ class Maze:
         self.sprites[] must first be initiated once by self.load_level)
     
         """
-        game_window = pygame.display.set_mode((ct.window_size() - 20, ct.window_size()))
-        hero = pygame.image.load(ct.img("macgyver")).convert_alpha()
-        # sprites img loading /postioning(from sprites number root and a sprite dim) + blit
+        game_window = pygame.display.set_mode((ct.WINDOW_WIDTH - 20, ct.WINDOW_HEIGHT))
+        hero = pygame.image.load(ct.IMG["macgyver"]).convert_alpha()
+        # sprites img loading /postioning(from sprites number square root and a sprite dim) + blit
         i = 0
         while i < len(self.sprites):
             item = self.sprites[i]
             image = self.sprite(i)
-            image = pygame.image.load(ct.img(item)).convert_alpha()
+            image = pygame.image.load(ct.IMG[item]).convert_alpha()
             game_window.blit(
                 image,
                 (
-                    (i % self.side_sprites_number() * ct.sprite_dim()),
-                    (i // self.side_sprites_number() * ct.sprite_dim()),
+                    (i % self.side_sprites_number() * ct.SPRITE_DIM),
+                    (i // self.side_sprites_number() * ct.SPRITE_DIM),
                 ),
             )
             i += 1
@@ -72,17 +72,23 @@ class Maze:
         game_window.blit(
             hero,
             (
-                (character_pos_sprite % self.side_sprites_number() * ct.sprite_dim()),
-                (character_pos_sprite // self.side_sprites_number() * ct.sprite_dim()),
+                (character_pos_sprite % self.side_sprites_number() * ct.SPRITE_DIM),
+                (character_pos_sprite // self.side_sprites_number() * ct.SPRITE_DIM),
             ),
         )
         font = pygame.freetype.SysFont("courrier", 15, 1)
         font.render_to(
-            game_window,
-            (125, 602),
-            "Items collected: " + str(items_carried),
-            (255, 255, 255),
+            game_window, (10, 602), "Items collected: ", (255, 255, 255),
         )
+        # items collected update + display
+        if len(items_carried) == len(ct.ITEMS_TO_COLLECT):
+            img_seringue = pygame.image.load(ct.IMG["seringe"])
+            game_window.blit(img_seringue, (130, 602))
+        else:
+            for index, value in enumerate(items_carried):
+                img_item = str(value)
+                img_item = pygame.image.load(ct.IMG[value]).convert_alpha()
+                game_window.blit(img_item, ((index * ct.SPRITE_DIM + 130), (602),))
         pygame.display.flip()
 
     def side_sprites_number(self):
